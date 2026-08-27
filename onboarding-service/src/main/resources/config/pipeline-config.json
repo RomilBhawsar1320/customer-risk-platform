@@ -1,0 +1,40 @@
+{
+  "datasets": [
+    {
+      "name": "customer",
+      "path": "../sample-data/customer_master.csv"
+    },
+    {
+      "name": "bureau",
+      "path": "../sample-data/credit_bureau.csv"
+    },
+    {
+      "name": "transaction",
+      "path": "../sample-data/transaction_summary.csv"
+    },
+    {
+      "name": "product",
+      "path": "../sample-data/product_holdings.csv"
+    },
+    {
+      "name": "marketing",
+      "path": "../sample-data/marketing_preferences.csv"
+    }
+  ],
+
+  "joins": [
+    {
+      "left": "customer",
+      "right": "bureau",
+      "column": "customer_id",
+      "type": "left"
+    }
+  ],
+
+  "filters": [
+    {
+      "name": "good_bureau",
+      "condition": "credit_score > 650"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: onboarding-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_risk_db
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+  batch:
+    jdbc:
+      initialize-schema: always
