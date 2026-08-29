@@ -34,7 +34,27 @@
   "filters": [
     {
       "name": "good_bureau",
-      "condition": "credit_score > 650"
+      "condition": "credit_score > 700"
+    }
+  ],
+
+  "riskRules": [
+    {
+      "riskCategory": "LOW_RISK",
+      "offer": "PLATINUM_CARD",
+      "minCreditScore": 751,
+      "minIncome": 100001
+    },
+    {
+      "riskCategory": "MEDIUM_RISK",
+      "offer": "GOLD_CARD",
+      "minCreditScore": 650,
+      "maxCreditScore": 750
+    },
+    {
+      "riskCategory": "HIGH_RISK",
+      "offer": "NO_OFFER",
+      "maxCreditScore": 649
     }
   ]
 }

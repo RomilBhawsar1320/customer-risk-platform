@@ -8,7 +8,10 @@ import java.util.List;
 public class PipelineConfig {
 
     private List<DatasetConfig> datasets;
+
     private List<JoinConfig> joins;
+
     private List<FilterConfig> filters;
 
+    private List<RiskRuleConfig> riskRules;
 }

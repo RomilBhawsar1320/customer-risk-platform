@@ -5,6 +5,7 @@ import com.romil.customer.onboarding.config.ConfigLoader;
 import com.romil.customer.onboarding.config.PipelineConfig;
 import com.romil.customer.onboarding.customer360.Customer360;
 import com.romil.customer.onboarding.customer360.Customer360Builder;
+import com.romil.customer.onboarding.model.ConfigDrivenRiskScoringEngine;
 import com.romil.customer.onboarding.model.RiskResult;
 import com.romil.customer.onboarding.model.RiskScoringEngine;
 import com.romil.customer.onboarding.reader.CsvReaderService;
@@ -32,7 +33,7 @@ public class PipelineExecutor {
     private AttributeProcessor attributeProcessor;
 
     @Autowired
-    private RiskScoringEngine riskScoringEngine;
+    private ConfigDrivenRiskScoringEngine riskScoringEngine;
 
     @Autowired
     private CsvReportGenerator csvReportGenerator;
@@ -77,7 +78,9 @@ public class PipelineExecutor {
             attributeProcessor.deriveAttributes(customer);
 
             RiskResult riskResult =
-                    riskScoringEngine.evaluate(customer);
+                    riskScoringEngine.evaluate(
+                            customer,
+                            config);
 
             results.add(riskResult);
         }
