@@ -13,4 +13,7 @@ public class RiskResult {
 
     private String riskCategory;
     private String offer;
+
+    private Integer creditLimit;
+
 }

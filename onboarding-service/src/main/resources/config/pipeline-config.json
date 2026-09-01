@@ -53,7 +53,7 @@
     },
     {
       "riskCategory": "HIGH_RISK",
-      "offer": "NO_OFFER",
+      "offer": "SECURED_CARD",
       "maxCreditScore": 649
     }
   ]

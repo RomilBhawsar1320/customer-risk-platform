@@ -16,7 +16,7 @@ public class CsvReportGenerator {
         try (FileWriter writer = new FileWriter(outputPath)) {
 
             writer.write(
-                    "customer_id,customer_name,credit_score,income,risk_category,offer\n"
+                    "customer_id,customer_name,credit_score,income,risk_category,offer,credit_limit\n"
             );
 
             for (RiskResult result : results) {
@@ -27,15 +27,15 @@ public class CsvReportGenerator {
                                 result.getCreditScore() + "," +
                                 result.getIncome() + "," +
                                 result.getRiskCategory() + "," +
-                                result.getOffer() +
+                                result.getOffer() + "," +
+                                result.getCreditLimit() +
                                 "\n"
                 );
             }
 
             System.out.println(
-                    "Report generated successfully : " +
-                            outputPath
-            );
+                    "Report generated successfully : "
+                            + outputPath);
 
         } catch (Exception e) {
 

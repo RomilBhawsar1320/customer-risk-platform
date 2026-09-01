@@ -50,6 +50,24 @@ public class ConfigDrivenRiskScoringEngine {
                 result.setOffer(
                         rule.getOffer());
 
+                // Credit Limit Assignment
+                if ("PLATINUM_CARD".equalsIgnoreCase(rule.getOffer())) {
+
+                    result.setCreditLimit(1000000);
+
+                } else if ("GOLD_CARD".equalsIgnoreCase(rule.getOffer())) {
+
+                    result.setCreditLimit(300000);
+
+                } else if ("SECURED_CARD".equalsIgnoreCase(rule.getOffer())) {
+
+                    result.setCreditLimit(50000);
+
+                } else {
+
+                    result.setCreditLimit(0);
+                }
+
                 return result;
             }
         }
@@ -73,6 +91,9 @@ public class ConfigDrivenRiskScoringEngine {
 
         defaultResult.setOffer(
                 "NO_OFFER");
+
+        defaultResult.setCreditLimit(
+                0);
 
         return defaultResult;
     }

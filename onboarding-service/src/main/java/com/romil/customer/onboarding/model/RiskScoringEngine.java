@@ -21,16 +21,19 @@ public class RiskScoringEngine {
 
             result.setRiskCategory("LOW_RISK");
             result.setOffer("PLATINUM_CARD");
+            result.setCreditLimit(1000000);
 
         } else if (score >= 650) {
 
             result.setRiskCategory("MEDIUM_RISK");
             result.setOffer("GOLD_CARD");
+            result.setCreditLimit(300000);
 
         } else {
 
             result.setRiskCategory("HIGH_RISK");
-            result.setOffer("NO_OFFER");
+            result.setOffer("SECURED_CARD");
+            result.setCreditLimit(50000);
         }
 
         return result;

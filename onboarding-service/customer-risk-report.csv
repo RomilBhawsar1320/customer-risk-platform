@@ -1,0 +1,5 @@
+customer_id,customer_name,credit_score,income,risk_category,offer,credit_limit
+1004,Sarah Wilson,620,60000.0,HIGH_RISK,SECURED_CARD,50000
+1003,Mike Brown,820,150000.0,LOW_RISK,PLATINUM_CARD,1000000
+1002,Jane Smith,710,85000.0,MEDIUM_RISK,GOLD_CARD,300000
+1001,John Doe,780,120000.0,LOW_RISK,PLATINUM_CARD,1000000

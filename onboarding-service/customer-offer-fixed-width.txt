@@ -1,0 +1,5 @@
+CUSTOMER  NAME                RISK           OFFER               LIMIT       
+1004      Sarah Wilson        HIGH_RISK      SECURED_CARD        50000       
+1003      Mike Brown          LOW_RISK       PLATINUM_CARD       1000000     
+1002      Jane Smith          MEDIUM_RISK    GOLD_CARD           300000      
+1001      John Doe            LOW_RISK       PLATINUM_CARD       1000000     
