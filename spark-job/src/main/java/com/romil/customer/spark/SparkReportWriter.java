@@ -7,10 +7,14 @@ public class SparkReportWriter {
 
     public void write(Dataset<Row> data) {
 
+        System.out.println("STARTING WRITE");
+
         data.coalesce(1)
                 .write()
                 .option("header", "true")
                 .mode("overwrite")
-                .csv("../reports/customer-risk-spark-output");
+                .csv("target/customer-risk-spark-output");
+
+        System.out.println("WRITE COMPLETED");
     }
 }
