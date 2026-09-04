@@ -1,0 +1,70 @@
+{
+  "datasets": [
+    {
+      "name": "customer",
+      "path": "../sample-data/customer_master.csv"
+    },
+    {
+      "name": "bureau",
+      "path": "../sample-data/credit_bureau.csv"
+    },
+    {
+      "name": "transaction",
+      "path": "../sample-data/transaction_summary.csv"
+    },
+    {
+      "name": "product",
+      "path": "../sample-data/product_holdings.csv"
+    },
+    {
+      "name": "marketing",
+      "path": "../sample-data/marketing_preferences.csv"
+    }
+  ],
+
+  "output": {
+    "path": "target/customer-risk-spark-output"
+  },
+
+  "joins": [
+    {
+      "left": "customer",
+      "right": "bureau",
+      "column": "customer_id",
+      "type": "left"
+    }
+  ],
+
+  "filters": [
+    {
+      "name": "good_bureau",
+      "condition": "credit_score > 700"
+    }
+  ],
+
+  "riskRules": [
+    {
+      "riskCategory": "LOW_RISK",
+      "offer": "PLATINUM_CARD",
+      "minCreditScore": 751,
+      "minIncome": 100001
+    },
+    {
+      "riskCategory": "MEDIUM_RISK",
+      "offer": "GOLD_CARD",
+      "minCreditScore": 650,
+      "maxCreditScore": 750
+    },
+    {
+      "riskCategory": "HIGH_RISK",
+      "offer": "SECURED_CARD",
+      "maxCreditScore": 649
+    },
+    {
+      "riskCategory": "VERY_LOW_RISK",
+      "offer": "DIAMOND_CARD",
+      "minCreditScore": 800,
+      "minIncome": 150000
+    }
+  ]
+}

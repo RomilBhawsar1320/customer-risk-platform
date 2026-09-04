@@ -1,0 +1,26 @@
+package com.romil.customer.spark.config;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.List;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class PipelineConfig {
+
+    private List<DatasetConfig> datasets;
+    private OutputConfig output;
+
+    public List<DatasetConfig> getDatasets() {
+        return datasets;
+    }
+
+    public void setDatasets(List<DatasetConfig> datasets) {
+        this.datasets = datasets;
+    }
+
+    public OutputConfig getOutput() {
+        return output;
+    }
+
+    public void setOutput(OutputConfig output) {
+        this.output = output;
+    }
+}

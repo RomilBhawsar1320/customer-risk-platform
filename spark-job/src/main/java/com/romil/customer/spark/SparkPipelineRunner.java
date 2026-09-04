@@ -8,6 +8,12 @@ import static org.apache.spark.sql.functions.col;
 import com.romil.customer.spark.transformation.CustomerAttributeTransformer;
 import com.romil.customer.spark.transformation.CustomerRankingTransformer;
 import com.romil.customer.spark.transformation.CustomerMetricsAggregator;
+import com.romil.customer.spark.config.DatasetConfig;
+import com.romil.customer.spark.config.PipelineConfig;
+import com.romil.customer.spark.config.PipelineConfigLoader;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SparkPipelineRunner {
 
@@ -18,35 +24,59 @@ public class SparkPipelineRunner {
 
         try {
 
+            PipelineConfig config =
+                    PipelineConfigLoader.load(
+                            "pipeline-config.json"
+                    );
+
+            System.out.println("CONFIG LOADED");
+
+            config.getDatasets()
+                    .forEach(dataset ->
+                            System.out.println(
+                                    dataset.getName() + " -> "
+                                            + dataset.getPath()
+                            )
+                    );
+
+            Map<String, String> datasetPaths =
+                    config.getDatasets()
+                            .stream()
+                            .collect(
+                                    Collectors.toMap(
+                                            DatasetConfig::getName,
+                                            DatasetConfig::getPath
+                                    )
+                            );
             Dataset<Row> customer =
                     spark.read()
                             .option("header", "true")
                             .option("inferSchema", "true")
-                            .csv("../sample-data/customer_master.csv");
+                            .csv(datasetPaths.get("customer"));
 
             Dataset<Row> bureau =
                     spark.read()
                             .option("header", "true")
                             .option("inferSchema", "true")
-                            .csv("../sample-data/credit_bureau.csv");
+                            .csv(datasetPaths.get("bureau"));
 
             Dataset<Row> transaction =
                     spark.read()
                             .option("header", "true")
                             .option("inferSchema", "true")
-                            .csv("../sample-data/transaction_summary.csv");
+                            .csv(datasetPaths.get("transaction"));
 
             Dataset<Row> product =
                     spark.read()
                             .option("header", "true")
                             .option("inferSchema", "true")
-                            .csv("../sample-data/product_holdings.csv");
+                            .csv(datasetPaths.get("product"));
 
             Dataset<Row> marketing =
                     spark.read()
                             .option("header", "true")
                             .option("inferSchema", "true")
-                            .csv("../sample-data/marketing_preferences.csv");
+                            .csv(datasetPaths.get("marketing"));
 
             Customer360BuilderSpark builder =
                     new Customer360BuilderSpark();
