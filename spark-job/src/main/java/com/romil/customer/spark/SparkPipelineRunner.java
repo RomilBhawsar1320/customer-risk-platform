@@ -91,7 +91,9 @@ public class SparkPipelineRunner {
                     );
 
             CustomerAttributeTransformer attributeTransformer =
-                    new CustomerAttributeTransformer();
+                    new CustomerAttributeTransformer(
+                            config.getAttributeRules()
+                    );
 
             Dataset<Row> enrichedCustomer360 =
                     attributeTransformer.apply(customer360);

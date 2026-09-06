@@ -42,6 +42,28 @@
     }
   ],
 
+  "attributeRules": {
+    "incomeBand": {
+      "high": 100000,
+      "medium": 50000
+    },
+
+    "customerSegment": {
+      "premium": 150000,
+      "standard": 50000
+    },
+
+    "spendBand": {
+      "high": 50000,
+      "medium": 20000
+    },
+
+    "creditBand": {
+      "excellent": 750,
+      "good": 650
+    }
+  },
+
   "riskRules": [
     {
       "riskCategory": "LOW_RISK",

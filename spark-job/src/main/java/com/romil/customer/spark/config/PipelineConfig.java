@@ -23,4 +23,15 @@ public class PipelineConfig {
     public void setOutput(OutputConfig output) {
         this.output = output;
     }
+
+    private AttributeRulesConfig attributeRules;
+
+    public AttributeRulesConfig getAttributeRules() {
+        return attributeRules;
+    }
+
+    public void setAttributeRules(
+            AttributeRulesConfig attributeRules) {
+        this.attributeRules = attributeRules;
+    }
 }
