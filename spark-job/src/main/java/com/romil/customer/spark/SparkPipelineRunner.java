@@ -11,6 +11,7 @@ import com.romil.customer.spark.transformation.CustomerMetricsAggregator;
 import com.romil.customer.spark.config.DatasetConfig;
 import com.romil.customer.spark.config.PipelineConfig;
 import com.romil.customer.spark.config.PipelineConfigLoader;
+import com.romil.customer.spark.transformation.RiskScoreTransformer;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -98,12 +99,14 @@ public class SparkPipelineRunner {
             Dataset<Row> enrichedCustomer360 =
                     attributeTransformer.apply(customer360);
 
+            RiskScoreTransformer riskScoreTransformer =
+                    new RiskScoreTransformer(
+                            config.getRiskWeights()
+                    );
+
             Dataset<Row> customer360WithScore =
-                    enrichedCustomer360.withColumn(
-                            "risk_score",
-                            col("credit_score")
-                                    .plus(col("income").divide(1000))
-                                    .plus(col("avg_balance").divide(5000))
+                    riskScoreTransformer.apply(
+                            enrichedCustomer360
                     );
 
             customer360WithScore.select(

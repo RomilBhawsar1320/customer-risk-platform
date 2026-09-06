@@ -64,6 +64,12 @@
     }
   },
 
+  "riskWeights": {
+    "creditScoreWeight": 1.0,
+    "incomeDivisor": 1000,
+    "balanceDivisor": 5000
+  },
+
   "riskRules": [
     {
       "riskCategory": "LOW_RISK",

@@ -34,4 +34,14 @@ public class PipelineConfig {
             AttributeRulesConfig attributeRules) {
         this.attributeRules = attributeRules;
     }
+    private RiskWeightsConfig riskWeights;
+    public RiskWeightsConfig getRiskWeights() {
+        return riskWeights;
+    }
+
+    public void setRiskWeights(
+            RiskWeightsConfig riskWeights) {
+
+        this.riskWeights = riskWeights;
+    }
 }
