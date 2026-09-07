@@ -134,7 +134,9 @@ public class SparkPipelineRunner {
             ).show(false);
 
             SparkRiskModelJob model =
-                    new SparkRiskModelJob();
+                    new SparkRiskModelJob(
+                            config.getRiskRules()
+                    );
 
             Dataset<Row> output =
                     model.apply(rankedCustomer360);

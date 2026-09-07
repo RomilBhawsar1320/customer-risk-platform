@@ -44,4 +44,13 @@ public class PipelineConfig {
 
         this.riskWeights = riskWeights;
     }
-}
+    private List<RiskRuleConfig> riskRules;
+    public List<RiskRuleConfig> getRiskRules() {
+        return riskRules;
+    }
+
+    public void setRiskRules(
+            List<RiskRuleConfig> riskRules) {
+
+        this.riskRules = riskRules;
+    }}
