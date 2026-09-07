@@ -14,7 +14,7 @@ public class CustomerRankingTransformer {
     public Dataset<Row> apply(Dataset<Row> df) {
 
         WindowSpec scoreWindow =
-                Window.orderBy(
+                Window.partitionBy("bureau_status").orderBy(
                         col("credit_score").desc()
                 );
 

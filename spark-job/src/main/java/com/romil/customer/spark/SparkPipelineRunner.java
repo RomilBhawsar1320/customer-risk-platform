@@ -12,6 +12,7 @@ import com.romil.customer.spark.config.DatasetConfig;
 import com.romil.customer.spark.config.PipelineConfig;
 import com.romil.customer.spark.config.PipelineConfigLoader;
 import com.romil.customer.spark.transformation.RiskScoreTransformer;
+import com.romil.customer.spark.transformation.FilterExecutor;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -97,13 +98,22 @@ public class SparkPipelineRunner {
                             config.getJoins()
                     );
 
+            FilterExecutor filterExecutor =
+                    new FilterExecutor();
+
+            Dataset<Row> filteredCustomer360 =
+                    filterExecutor.execute(
+                            customer360,
+                            config.getFilters()
+                    );
+
             CustomerAttributeTransformer attributeTransformer =
                     new CustomerAttributeTransformer(
                             config.getAttributeRules()
                     );
 
             Dataset<Row> enrichedCustomer360 =
-                    attributeTransformer.apply(customer360);
+                    attributeTransformer.apply(filteredCustomer360);
 
             RiskScoreTransformer riskScoreTransformer =
                     new RiskScoreTransformer(

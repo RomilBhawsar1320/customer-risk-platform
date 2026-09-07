@@ -63,5 +63,15 @@ public class PipelineConfig {
     public void setJoins(List<JoinConfig> joins) {
         this.joins = joins;
     }
+
+    private List<FilterConfig> filters;
+
+    public List<FilterConfig> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List<FilterConfig> filters) {
+        this.filters = filters;
+    }
 }
 
