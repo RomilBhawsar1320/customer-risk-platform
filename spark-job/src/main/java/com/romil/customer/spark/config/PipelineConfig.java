@@ -53,4 +53,15 @@ public class PipelineConfig {
             List<RiskRuleConfig> riskRules) {
 
         this.riskRules = riskRules;
-    }}
+    }
+    private List<JoinConfig> joins;
+
+    public List<JoinConfig> getJoins() {
+        return joins;
+    }
+
+    public void setJoins(List<JoinConfig> joins) {
+        this.joins = joins;
+    }
+}
+

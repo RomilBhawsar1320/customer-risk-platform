@@ -32,6 +32,24 @@
       "right": "bureau",
       "column": "customer_id",
       "type": "left"
+    },
+    {
+      "left": "customer",
+      "right": "transaction",
+      "column": "customer_id",
+      "type": "left"
+    },
+    {
+      "left": "customer",
+      "right": "product",
+      "column": "customer_id",
+      "type": "left"
+    },
+    {
+      "left": "customer",
+      "right": "marketing",
+      "column": "customer_id",
+      "type": "left"
     }
   ],
 

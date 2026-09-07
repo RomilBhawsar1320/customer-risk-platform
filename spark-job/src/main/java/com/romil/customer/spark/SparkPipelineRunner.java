@@ -15,7 +15,7 @@ import com.romil.customer.spark.transformation.RiskScoreTransformer;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-
+import java.util.HashMap;
 public class SparkPipelineRunner {
 
     public static void main(String[] args) {
@@ -79,16 +79,22 @@ public class SparkPipelineRunner {
                             .option("inferSchema", "true")
                             .csv(datasetPaths.get("marketing"));
 
+            Map<String, Dataset<Row>> datasets =
+                    new HashMap<>();
+
+            datasets.put("customer", customer);
+            datasets.put("bureau", bureau);
+            datasets.put("transaction", transaction);
+            datasets.put("product", product);
+            datasets.put("marketing", marketing);
+
             Customer360BuilderSpark builder =
                     new Customer360BuilderSpark();
 
             Dataset<Row> customer360 =
                     builder.build(
-                            customer,
-                            bureau,
-                            transaction,
-                            product,
-                            marketing
+                            datasets,
+                            config.getJoins()
                     );
 
             CustomerAttributeTransformer attributeTransformer =
