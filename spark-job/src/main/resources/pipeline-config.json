@@ -94,28 +94,29 @@
   },
 
   "riskRules": [
-    {
-      "riskCategory": "LOW_RISK",
-      "offer": "PLATINUM_CARD",
-      "minCreditScore": 751,
-      "minIncome": 100001
-    },
-    {
-      "riskCategory": "MEDIUM_RISK",
-      "offer": "GOLD_CARD",
-      "minCreditScore": 650,
-      "maxCreditScore": 750
-    },
-    {
-      "riskCategory": "HIGH_RISK",
-      "offer": "SECURED_CARD",
-      "maxCreditScore": 649
-    },
+
     {
       "riskCategory": "VERY_LOW_RISK",
       "offer": "DIAMOND_CARD",
-      "minCreditScore": 800,
-      "minIncome": 150000
+      "condition": "credit_score >= 800 AND income >= 150000"
+    },
+
+    {
+      "riskCategory": "LOW_RISK",
+      "offer": "PLATINUM_CARD",
+      "condition": "credit_score >= 751 AND income >= 100001"
+    },
+
+    {
+      "riskCategory": "MEDIUM_RISK",
+      "offer": "GOLD_CARD",
+      "condition": "credit_score >= 650 AND credit_score <= 750"
+    },
+
+    {
+      "riskCategory": "HIGH_RISK",
+      "offer": "SECURED_CARD",
+      "condition": "credit_score <= 649"
     }
   ]
 }

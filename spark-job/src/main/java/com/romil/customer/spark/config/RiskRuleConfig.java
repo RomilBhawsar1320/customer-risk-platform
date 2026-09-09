@@ -3,12 +3,10 @@ package com.romil.customer.spark.config;
 public class RiskRuleConfig {
 
     private String riskCategory;
+
     private String offer;
 
-    private Integer minCreditScore;
-    private Integer maxCreditScore;
-
-    private Integer minIncome;
+    private String condition;
 
     public String getRiskCategory() {
         return riskCategory;
@@ -26,27 +24,11 @@ public class RiskRuleConfig {
         this.offer = offer;
     }
 
-    public Integer getMinCreditScore() {
-        return minCreditScore;
+    public String getCondition() {
+        return condition;
     }
 
-    public void setMinCreditScore(Integer minCreditScore) {
-        this.minCreditScore = minCreditScore;
-    }
-
-    public Integer getMaxCreditScore() {
-        return maxCreditScore;
-    }
-
-    public void setMaxCreditScore(Integer maxCreditScore) {
-        this.maxCreditScore = maxCreditScore;
-    }
-
-    public Integer getMinIncome() {
-        return minIncome;
-    }
-
-    public void setMinIncome(Integer minIncome) {
-        this.minIncome = minIncome;
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 }

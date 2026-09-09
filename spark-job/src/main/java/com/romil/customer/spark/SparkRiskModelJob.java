@@ -7,10 +7,9 @@ import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
 import java.util.List;
-
-import static org.apache.spark.sql.functions.col;
 import static org.apache.spark.sql.functions.lit;
 import static org.apache.spark.sql.functions.when;
+import static org.apache.spark.sql.functions.expr;
 
 public class SparkRiskModelJob {
 
@@ -29,33 +28,12 @@ public class SparkRiskModelJob {
 
         Column offerExpr = lit("UNKNOWN");
 
-        for (RiskRuleConfig rule : rules) {
+        for (int i = rules.size() - 1; i >= 0; i--) {
 
-            Column condition = lit(true);
+            RiskRuleConfig rule = rules.get(i);
 
-            if (rule.getMinCreditScore() != null) {
-
-                condition = condition.and(
-                        col("credit_score")
-                                .geq(rule.getMinCreditScore())
-                );
-            }
-
-            if (rule.getMaxCreditScore() != null) {
-
-                condition = condition.and(
-                        col("credit_score")
-                                .leq(rule.getMaxCreditScore())
-                );
-            }
-
-            if (rule.getMinIncome() != null) {
-
-                condition = condition.and(
-                        col("income")
-                                .geq(rule.getMinIncome())
-                );
-            }
+            Column condition =
+                    expr(rule.getCondition());
 
             riskExpr =
                     when(
@@ -69,6 +47,7 @@ public class SparkRiskModelJob {
                             rule.getOffer()
                     ).otherwise(offerExpr);
         }
+
 
         return customer360
                 .withColumn(

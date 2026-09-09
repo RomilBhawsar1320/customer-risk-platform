@@ -167,8 +167,8 @@ public class SparkPipelineRunner {
 
             metrics.show(false);
 
-//            new SparkReportWriter()
-//                    .write(output);
+            new SparkReportWriter()
+                    .write(output);
 
         } finally {
 

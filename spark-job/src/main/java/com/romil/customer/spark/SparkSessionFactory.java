@@ -9,6 +9,11 @@ public final class SparkSessionFactory {
 
     public static SparkSession create() {
 
+        System.setProperty(
+                "hadoop.home.dir",
+                "D:\\hadoop"
+        );
+
         return SparkSession.builder()
                 .appName("CustomerRiskSpark")
                 .master("local[*]")
