@@ -1,11 +1,14 @@
 package com.romil.customer.spark.transformation;
 
 import com.romil.customer.spark.config.AttributeRulesConfig;
-
+import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 
-import static org.apache.spark.sql.functions.col;
+import java.util.Map;
+
+import static org.apache.spark.sql.functions.expr;
+import static org.apache.spark.sql.functions.lit;
 import static org.apache.spark.sql.functions.when;
 
 public class CustomerAttributeTransformer {
@@ -18,68 +21,51 @@ public class CustomerAttributeTransformer {
         this.config = config;
     }
 
+    @SuppressWarnings("unchecked")
     public Dataset<Row> apply(Dataset<Row> df) {
 
         return df
-
                 .withColumn(
                         "income_band",
-                        when(
-                                col("income")
-                                        .gt(config.getIncomeBand().getHigh()),
-                                "HIGH"
-                        )
-                                .when(
-                                        col("income")
-                                                .geq(config.getIncomeBand().getMedium()),
-                                        "MEDIUM"
-                                )
-                                .otherwise("LOW")
+                        buildExpression(config.getIncomeBand())
                 )
-
                 .withColumn(
                         "customer_segment",
-                        when(
-                                col("income")
-                                        .geq(config.getCustomerSegment().getPremium()),
-                                "PREMIUM"
-                        )
-                                .when(
-                                        col("income")
-                                                .geq(config.getCustomerSegment().getStandard()),
-                                        "STANDARD"
-                                )
-                                .otherwise("BASIC")
+                        buildExpression(config.getCustomerSegment())
                 )
-
                 .withColumn(
                         "spend_band",
-                        when(
-                                col("monthly_spend")
-                                        .gt(config.getSpendBand().getHigh()),
-                                "HIGH_SPENDER"
-                        )
-                                .when(
-                                        col("monthly_spend")
-                                                .geq(config.getSpendBand().getMedium()),
-                                        "MEDIUM_SPENDER"
-                                )
-                                .otherwise("LOW_SPENDER")
+                        buildExpression(config.getSpendBand())
                 )
-
                 .withColumn(
                         "credit_band",
-                        when(
-                                col("credit_score")
-                                        .gt(config.getCreditBand().getExcellent()),
-                                "EXCELLENT"
-                        )
-                                .when(
-                                        col("credit_score")
-                                                .geq(config.getCreditBand().getGood()),
-                                        "GOOD"
-                                )
-                                .otherwise("POOR")
+                        buildExpression(config.getCreditBand())
                 );
+    }
+
+    private Column buildExpression(
+            Map<String, String> rules) {
+
+        Column column = null;
+
+        for (Map.Entry<String, String> entry : rules.entrySet()) {
+
+            if (column == null) {
+
+                column = when(
+                        expr(entry.getValue()),
+                        lit(entry.getKey())
+                );
+
+            } else {
+
+                column = column.when(
+                        expr(entry.getValue()),
+                        lit(entry.getKey())
+                );
+            }
+        }
+
+        return column;
     }
 }

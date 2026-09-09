@@ -61,24 +61,29 @@
   ],
 
   "attributeRules": {
+
     "incomeBand": {
-      "high": 100000,
-      "medium": 50000
+      "HIGH": "income >= 100000",
+      "MEDIUM": "income >= 50000 AND income < 100000",
+      "LOW": "income < 50000"
     },
 
     "customerSegment": {
-      "premium": 150000,
-      "standard": 50000
+      "PREMIUM": "income >= 150000",
+      "STANDARD": "income >= 50000 AND income < 150000",
+      "BASIC": "income < 50000"
     },
 
     "spendBand": {
-      "high": 50000,
-      "medium": 20000
+      "HIGH_SPENDER": "monthly_spend >= 50000",
+      "MEDIUM_SPENDER": "monthly_spend >= 20000 AND monthly_spend < 50000",
+      "LOW_SPENDER": "monthly_spend < 20000"
     },
 
     "creditBand": {
-      "excellent": 750,
-      "good": 650
+      "EXCELLENT": "credit_score >= 750",
+      "GOOD": "credit_score >= 650 AND credit_score < 750",
+      "POOR": "credit_score < 650"
     }
   },
 
