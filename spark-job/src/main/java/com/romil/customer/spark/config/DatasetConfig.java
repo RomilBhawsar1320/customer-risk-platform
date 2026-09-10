@@ -4,6 +4,7 @@ public class DatasetConfig {
 
     private String name;
     private String path;
+    private String format;
 
     public String getName() {
         return name;
@@ -19,5 +20,13 @@ public class DatasetConfig {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
     }
 }

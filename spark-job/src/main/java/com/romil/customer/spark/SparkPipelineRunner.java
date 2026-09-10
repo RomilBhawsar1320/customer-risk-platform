@@ -1,5 +1,6 @@
 package com.romil.customer.spark;
 
+import com.romil.customer.spark.reader.DataReaderFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -50,44 +51,26 @@ public class SparkPipelineRunner {
                                             DatasetConfig::getPath
                                     )
                             );
-            Dataset<Row> customer =
-                    spark.read()
-                            .option("header", "true")
-                            .option("inferSchema", "true")
-                            .csv(datasetPaths.get("customer"));
-
-            Dataset<Row> bureau =
-                    spark.read()
-                            .option("header", "true")
-                            .option("inferSchema", "true")
-                            .csv(datasetPaths.get("bureau"));
-
-            Dataset<Row> transaction =
-                    spark.read()
-                            .option("header", "true")
-                            .option("inferSchema", "true")
-                            .csv(datasetPaths.get("transaction"));
-
-            Dataset<Row> product =
-                    spark.read()
-                            .option("header", "true")
-                            .option("inferSchema", "true")
-                            .csv(datasetPaths.get("product"));
-
-            Dataset<Row> marketing =
-                    spark.read()
-                            .option("header", "true")
-                            .option("inferSchema", "true")
-                            .csv(datasetPaths.get("marketing"));
-
             Map<String, Dataset<Row>> datasets =
                     new HashMap<>();
 
-            datasets.put("customer", customer);
-            datasets.put("bureau", bureau);
-            datasets.put("transaction", transaction);
-            datasets.put("product", product);
-            datasets.put("marketing", marketing);
+            for (DatasetConfig datasetConfig : config.getDatasets()) {
+
+                Dataset<Row> dataset =
+                        DataReaderFactory
+                                .getReader(
+                                        datasetConfig.getFormat()
+                                )
+                                .read(
+                                        spark,
+                                        datasetConfig.getPath()
+                                );
+
+                datasets.put(
+                        datasetConfig.getName(),
+                        dataset
+                );
+            }
 
             Customer360BuilderSpark builder =
                     new Customer360BuilderSpark();
@@ -168,7 +151,10 @@ public class SparkPipelineRunner {
             metrics.show(false);
 
             new SparkReportWriter()
-                    .write(output);
+                    .write(
+                            output,
+                            config.getOutput()
+                    );
 
         } finally {
 

@@ -2,28 +2,34 @@
   "datasets": [
     {
       "name": "customer",
-      "path": "../sample-data/customer_master.csv"
+      "path": "../sample-data/customer_master.csv",
+      "format": "csv"
     },
     {
       "name": "bureau",
-      "path": "../sample-data/credit_bureau.csv"
+      "path": "../sample-data/credit_bureau.csv",
+      "format": "csv"
     },
     {
       "name": "transaction",
-      "path": "../sample-data/transaction_summary.csv"
+      "path": "../sample-data/transaction_summary.csv",
+      "format": "csv"
     },
     {
       "name": "product",
-      "path": "../sample-data/product_holdings.csv"
+      "path": "../sample-data/product_holdings.csv",
+      "format": "csv"
     },
     {
       "name": "marketing",
-      "path": "../sample-data/marketing_preferences.csv"
+      "path": "../sample-data/marketing_preferences.csv",
+      "format": "csv"
     }
   ],
 
   "output": {
-    "path": "target/customer-risk-spark-output"
+    "path": "target/customer-risk-spark-output",
+    "format": "csv"
   },
 
   "joins": [
@@ -56,7 +62,7 @@
   "filters": [
     {
       "name": "good_bureau",
-      "condition": "credit_score > 700"
+      "condition": "credit_score > 650"
     }
   ],
 
@@ -94,29 +100,25 @@
   },
 
   "riskRules": [
-
     {
       "riskCategory": "VERY_LOW_RISK",
       "offer": "DIAMOND_CARD",
       "condition": "credit_score >= 800 AND income >= 150000"
     },
-
     {
       "riskCategory": "LOW_RISK",
       "offer": "PLATINUM_CARD",
-      "condition": "credit_score >= 751 AND income >= 100001"
+      "condition": "credit_score >= 750 AND income >= 100001"
     },
-
     {
       "riskCategory": "MEDIUM_RISK",
       "offer": "GOLD_CARD",
       "condition": "credit_score >= 650 AND credit_score <= 750"
     },
-
     {
       "riskCategory": "HIGH_RISK",
       "offer": "SECURED_CARD",
-      "condition": "credit_score <= 649"
+      "condition": "credit_score <= 650"
     }
   ]
 }
