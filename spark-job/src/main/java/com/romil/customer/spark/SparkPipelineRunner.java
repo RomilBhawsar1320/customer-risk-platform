@@ -22,6 +22,11 @@ public class SparkPipelineRunner {
 
     public static void main(String[] args) {
 
+        long startTime = System.currentTimeMillis();
+
+        long inputCount = 0;
+        long outputCount = 0;
+
         SparkSession spark =
                 SparkSessionFactory.create();
 
@@ -71,6 +76,13 @@ public class SparkPipelineRunner {
                         dataset
                 );
             }
+
+            inputCount = datasets.get("customer").count();
+
+            System.out.println(
+                    "INPUT CUSTOMER RECORDS : "
+                            + inputCount
+            );
 
             Customer360BuilderSpark builder =
                     new Customer360BuilderSpark();
@@ -140,6 +152,14 @@ public class SparkPipelineRunner {
             Dataset<Row> output =
                     model.apply(rankedCustomer360);
 
+            outputCount =
+                    output.count();
+
+            System.out.println(
+                    "FINAL OUTPUT RECORDS : "
+                            + outputCount
+            );
+
             output.show(false);
 
             CustomerMetricsAggregator aggregator =
@@ -158,7 +178,25 @@ public class SparkPipelineRunner {
 
         } finally {
 
+
+
+            long endTime = System.currentTimeMillis();
+
+            double executionTimeSeconds =
+                    (endTime - startTime) / 1000.0;
+
+            System.out.println();
+            System.out.println("==================================");
+            System.out.println("PIPELINE EXECUTION SUMMARY");
+            System.out.println("==================================");
+            System.out.println("Input Records  : " + inputCount);
+            System.out.println("Output Records : " + outputCount);
+            System.out.println("Execution Time : "
+                    + executionTimeSeconds
+                    + " seconds");
+            System.out.println("==================================");
             spark.stop();
+
         }
     }
 }
