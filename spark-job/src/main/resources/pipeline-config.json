@@ -2,27 +2,27 @@
   "datasets": [
     {
       "name": "customer",
-      "path": "../sample-data/customer_master.csv",
+      "path": "sample-data-generated/customer_master.csv",
       "format": "csv"
     },
     {
       "name": "bureau",
-      "path": "../sample-data/credit_bureau.csv",
+      "path": "sample-data-generated/credit_bureau.csv",
       "format": "csv"
     },
     {
       "name": "transaction",
-      "path": "../sample-data/transaction_summary.csv",
+      "path": "sample-data-generated/transaction_summary.csv",
       "format": "csv"
     },
     {
       "name": "product",
-      "path": "../sample-data/product_holdings.csv",
+      "path": "sample-data-generated/product_holdings.csv",
       "format": "csv"
     },
     {
       "name": "marketing",
-      "path": "../sample-data/marketing_preferences.csv",
+      "path": "sample-data-generated/marketing_preferences.csv",
       "format": "csv"
     }
   ],
