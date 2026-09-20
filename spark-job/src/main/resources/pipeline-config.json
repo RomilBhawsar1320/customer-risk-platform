@@ -62,7 +62,7 @@
   "filters": [
     {
       "name": "good_bureau",
-      "condition": "credit_score > 650"
+      "condition": "credit_score > 650 AND income > 50000"
     }
   ],
 

@@ -1,0 +1,248 @@
+Future Enhancements
+
+1. Multi-Format Data Ingestion
+
+Currently, the pipeline processes CSV files. The ingestion framework can be enhanced to support multiple enterprise data formats:
+
+CSV
+
+Parquet
+
+Delta Lake
+
+Avro
+
+JSON
+
+ORC
+
+This can be achieved through a pluggable reader framework where data sources are configured externally, allowing the pipeline to switch formats without code changes.
+
+Benefits
+
+Better performance with columnar storage formats like Parquet.
+
+Support for large-scale analytics workloads.
+
+Improved interoperability with modern data platforms.
+
+
+
+2. Metadata-Driven Processing
+
+Introduce a configuration-driven ingestion framework where source information is maintained in metadata files or tables:
+
+YAML
+
+source:
+
+name: credit_bureau
+
+format: parquet
+
+path: /data/credit_bureau
+
+This would eliminate hardcoded file paths and formats from the application.
+
+Benefits
+
+Easier onboarding of new datasets.
+
+Reduced code changes.
+
+Improved maintainability.
+
+
+
+3. Batch Processing Framework
+
+Extend the current solution into a true batch processing platform.
+
+Daily Batch Processing
+
+Daily Customer Risk Assessment
+
+Process incremental customer records.
+
+Generate daily risk snapshots.
+
+Produce aggregated reports.
+
+Scheduled Execution
+
+Airflow
+
+Azure Data Factory
+
+Databricks Workflows
+
+Control-M
+
+Benefits
+
+Automated execution.
+
+SLA-based data processing.
+
+Production-ready scheduling.
+
+
+
+4. Historical Risk Tracking
+
+Persist daily risk snapshots:
+
+customer_id
+
+risk_category
+
+risk_score
+
+assessment_date
+
+This enables:
+
+Risk trend analysis
+
+Customer movement tracking
+
+Portfolio evolution monitoring
+
+Benefits
+
+Better reporting
+
+Auditing capability
+
+Regulatory compliance support
+
+
+
+5. Delta Lake Adoption
+
+Store curated outputs in Delta format instead of CSV.
+
+Bronze → Silver → Gold
+
+Benefits
+
+ACID transactions
+
+Schema evolution
+
+Time travel
+
+Faster reads
+
+Simplified incremental processing
+
+
+
+6. Near Real-Time Processing
+
+After establishing a stable batch architecture, evolve the solution using Spark Structured Streaming.
+
+Example sources:
+
+Kafka
+
+Event Hubs
+
+CDC streams
+
+Transaction events
+
+The same rule engine can score incoming events continuously.
+
+Benefits
+
+Faster risk detection
+
+Continuous customer monitoring
+
+Improved responsiveness to customer behavior
+
+
+
+7. Unified Rule Engine
+
+Move all business rules to external configuration.
+
+Current:
+
+when(col("credit_score").gt(750))
+
+Future:
+
+JSON
+
+{
+
+"ruleType": "RISK",
+
+"expression": "credit_score >= 800 AND income > 100000"
+
+}
+
+Benefits
+
+Business-driven rule management.
+
+No code deployment for rule updates.
+
+Faster change implementation.
+
+
+
+8. Machine Learning Based Risk Prediction
+
+Build predictive models using historical customer data.
+
+Potential features:
+
+Credit score history
+
+Transaction patterns
+
+Product portfolio
+
+Marketing engagement
+
+Benefits
+
+Improved accuracy.
+
+Predictive rather than rule-based risk assessment.
+
+Better customer targeting.
+
+
+
+9. API Layer and Consumer Integration
+
+Expose risk results through APIs.
+
+Examples:
+
+CRM systems
+
+Customer service applications
+
+Marketing platforms
+
+Loan processing systems
+
+Benefits
+
+Real-time consumption.
+
+Easier integration.
+
+Reusable risk services.
+
+
+
+Future Vision
+
+Evolve the current CSV-based Spark batch application into a metadata-driven, multi-format data platform supporting Parquet and Delta Lake, scheduled batch processing, historical risk tracking, and eventually real-time risk scoring using Spark Structured Streaming and event-driven architectures. This creates a scalable foundation for advanced analytics and machine learning-powered customer risk assessment.
+
