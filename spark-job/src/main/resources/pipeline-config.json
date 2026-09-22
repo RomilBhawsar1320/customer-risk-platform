@@ -61,8 +61,12 @@
 
   "filters": [
     {
-      "name": "good_bureau",
-      "condition": "credit_score > 650 AND income > 50000"
+      "name": "stable_employment_customers",
+      "condition": "employment_type IN ('SALARIED', 'SELF_EMPLOYED', 'BUSINESS') AND employment_tenure_months >= 12"
+    },
+    {
+      "name": "eligible_credit_customers",
+      "condition": "credit_score > 650 AND income > 50000 AND account_age_months >= 6"
     }
   ],
 
@@ -103,22 +107,22 @@
     {
       "riskCategory": "VERY_LOW_RISK",
       "offer": "DIAMOND_CARD",
-      "condition": "credit_score >= 800 AND income >= 150000"
+      "condition": "credit_score >= 800 AND income >= 150000 AND employment_tenure_months >= 60 AND account_age_months >= 36"
     },
     {
       "riskCategory": "LOW_RISK",
       "offer": "PLATINUM_CARD",
-      "condition": "credit_score >= 750 AND income >= 100001"
+      "condition": "credit_score >= 750 AND income >= 100000 AND employment_tenure_months >= 24 AND account_age_months >= 12"
     },
     {
       "riskCategory": "MEDIUM_RISK",
       "offer": "GOLD_CARD",
-      "condition": "credit_score >= 650 AND credit_score <= 750"
+      "condition": "credit_score >= 650 AND credit_score < 750"
     },
     {
       "riskCategory": "HIGH_RISK",
       "offer": "SECURED_CARD",
-      "condition": "credit_score <= 650"
+      "condition": "credit_score < 650"
     }
   ]
 }

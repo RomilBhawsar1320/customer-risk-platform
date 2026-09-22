@@ -47,15 +47,6 @@ public class SparkPipelineRunner {
                             )
                     );
 
-            Map<String, String> datasetPaths =
-                    config.getDatasets()
-                            .stream()
-                            .collect(
-                                    Collectors.toMap(
-                                            DatasetConfig::getName,
-                                            DatasetConfig::getPath
-                                    )
-                            );
             Map<String, Dataset<Row>> datasets =
                     new HashMap<>();
 
@@ -122,6 +113,15 @@ public class SparkPipelineRunner {
 
             customer360WithScore.select(
                     "customer_id",
+                    "occupation",
+                    "employment_type",
+                    "employment_tenure_months",
+                    "city",
+                    "state",
+                    "marital_status",
+                    "dependents",
+                    "education_level",
+                    "account_age_months",
                     "income_band",
                     "customer_segment",
                     "spend_band",
