@@ -25,7 +25,14 @@ public record CustomerData(
 
         String productName,
 
-        boolean emailOptIn
+        boolean emailOptIn,
+
+        double creditUtilizationPct,
+        int missedPayments12m,
+        double outstandingLoanAmount,
+
+        double emiOutflow,
+        boolean mobileAppActiveFlag
 
 ) {
 }

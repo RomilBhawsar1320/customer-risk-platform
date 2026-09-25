@@ -3,6 +3,7 @@ package com.romil.customer.spark.generator;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 
 public class TestDataGenerator {
 
@@ -66,31 +67,50 @@ public class TestDataGenerator {
                                 outputDir.resolve(
                                         "credit_bureau.csv"
                                 ),
-                                "customer_id,credit_score,bureau_status"
+                        String.join(
+                                ",",
+                                "customer_id",
+                                "credit_score",
+                                "bureau_status",
+                                "credit_utilization_pct",
+                                "missed_payments_12m",
+                                "outstanding_loan_amount"
+                        )
                         );
 
                 CsvFileWriter transactionWriter =
                         new CsvFileWriter(
                                 outputDir.resolve(
-                                        "transaction_summary.csv"
+                                "transaction_summary.csv"
                                 ),
-                                "customer_id,monthly_spend,avg_balance"
+                        String.join(
+                                ",",
+                                "customer_id",
+                                "monthly_spend",
+                                "avg_balance",
+                                "emi_outflow"
+                        )
                         );
 
                 CsvFileWriter productWriter =
                         new CsvFileWriter(
-                                outputDir.resolve(
-                                        "product_holdings.csv"
-                                ),
-                                "customer_id,product_name"
+                        outputDir.resolve(
+                                "product_holdings.csv"
+                        ),
+                        "customer_id,product_name"
                         );
 
                 CsvFileWriter marketingWriter =
                         new CsvFileWriter(
-                                outputDir.resolve(
-                                        "marketing_preferences.csv"
-                                ),
-                                "customer_id,email_opt_in"
+                        outputDir.resolve(
+                                "marketing_preferences.csv"
+                        ),
+                        String.join(
+                                ",",
+                                "customer_id",
+                                "email_opt_in",
+                                "mobile_app_active_flag"
+                        )
                         )
         ) {
 
@@ -147,7 +167,20 @@ public class TestDataGenerator {
                                 String.valueOf(
                                         customer.creditScore()
                                 ),
-                                customer.bureauStatus()
+                                customer.bureauStatus(),
+                                String.format(
+                                        Locale.US,
+                                        "%.2f",
+                                        customer.creditUtilizationPct()
+                                ),
+                                String.valueOf(
+                                        customer.missedPayments12m()
+                                ),
+                                String.format(
+                                        Locale.US,
+                                        "%.2f",
+                                        customer.outstandingLoanAmount()
+                                )
                         )
                 );
 
@@ -162,6 +195,11 @@ public class TestDataGenerator {
                                 ),
                                 String.valueOf(
                                         customer.avgBalance()
+                                ),
+                                String.format(
+                                        Locale.US,
+                                        "%.2f",
+                                        customer.emiOutflow()
                                 )
                         )
                 );
@@ -184,6 +222,9 @@ public class TestDataGenerator {
                                 ),
                                 String.valueOf(
                                         customer.emailOptIn()
+                                ),
+                                String.valueOf(
+                                        customer.mobileAppActiveFlag()
                                 )
                         )
                 );

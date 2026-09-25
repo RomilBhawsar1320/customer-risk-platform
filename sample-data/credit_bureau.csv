@@ -1,0 +1,5 @@
+customer_id,credit_score,bureau_status
+1001,780,GOOD
+1002,710,GOOD
+1003,820,GOOD
+1004,620,REVIEW

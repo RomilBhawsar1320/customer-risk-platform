@@ -127,6 +127,36 @@ public final class RandomDataFactory {
         boolean emailOptIn =
                 RANDOM.nextDouble() < 0.70;
 
+        double creditUtilizationPct =
+                generateCreditUtilizationPct(
+                        creditScore,
+                        bureauStatus
+                );
+
+        int missedPayments12m =
+                generateMissedPayments12m(
+                        creditScore,
+                        bureauStatus,
+                        creditUtilizationPct
+                );
+
+        double outstandingLoanAmount =
+                generateOutstandingLoanAmount(
+                        income,
+                        creditScore,
+                        creditUtilizationPct
+                );
+
+        double emiOutflow =
+                generateEmiOutflow(
+                        outstandingLoanAmount,
+                        income,
+                        creditScore
+                );
+
+        boolean mobileAppActiveFlag =
+                RANDOM.nextDouble() < 0.75;
+
         return new CustomerData(
                 customerId,
                 customerName,
@@ -146,7 +176,12 @@ public final class RandomDataFactory {
                 monthlySpend,
                 avgBalance,
                 productName,
-                emailOptIn
+                emailOptIn,
+                creditUtilizationPct,
+                missedPayments12m,
+                outstandingLoanAmount,
+                emiOutflow,
+                mobileAppActiveFlag
         );
     }
 
@@ -377,5 +412,94 @@ public final class RandomDataFactory {
                 creditScore,
                 850
         );
+    }
+
+    private static double generateCreditUtilizationPct(
+            int creditScore,
+            String bureauStatus
+    ) {
+
+        double base =
+                bureauStatus.equals("GOOD")
+                        ? 25.0 + RANDOM.nextDouble() * 35.0
+                        : 35.0 + RANDOM.nextDouble() * 50.0;
+
+        if (creditScore >= 750) {
+            base *= 0.8;
+        } else if (creditScore < 650) {
+            base *= 1.2;
+        }
+
+        return Math.min(
+                100.0,
+                Math.max(0.0, base)
+        );
+    }
+
+    private static int generateMissedPayments12m(
+            int creditScore,
+            String bureauStatus,
+            double creditUtilizationPct
+    ) {
+
+        int upperBound =
+                bureauStatus.equals("GOOD")
+                        ? 3
+                        : 12;
+
+        if (creditScore >= 750) {
+            upperBound = 2;
+        }
+
+        if (creditUtilizationPct > 80.0) {
+            upperBound += 4;
+        }
+
+        return RANDOM.nextInt(upperBound + 1);
+    }
+
+    private static double generateOutstandingLoanAmount(
+            double income,
+            int creditScore,
+            double creditUtilizationPct
+    ) {
+
+        double base =
+                income * (0.10 + RANDOM.nextDouble() * 0.55);
+
+        if (creditScore >= 750) {
+            base *= 0.8;
+        } else if (creditScore < 650) {
+            base *= 1.3;
+        }
+
+        if (creditUtilizationPct > 80.0) {
+            base *= 1.2;
+        }
+
+        return Math.max(0.0, base);
+    }
+
+    private static double generateEmiOutflow(
+            double outstandingLoanAmount,
+            double income,
+            int creditScore
+    ) {
+
+        double base =
+                outstandingLoanAmount
+                        * (0.08 + RANDOM.nextDouble() * 0.18);
+
+        if (creditScore >= 750) {
+            base *= 0.9;
+        } else if (creditScore < 650) {
+            base *= 1.2;
+        }
+
+        if (income > 0) {
+            base = Math.min(base, income * 0.6);
+        }
+
+        return Math.max(0.0, base);
     }
 }
